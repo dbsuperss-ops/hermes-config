@@ -7,16 +7,20 @@
 ```
 hermes-config/
 ├── README.md
+├── deploy.sh                          # 프로필 배포 스크립트 (다른 PC에서 실행)
 ├── Hermes_최종_구축계획_2026-06.md   # 전체 구축 계획 문서
-├── hermes-agent-architecture-v3.html # 아키텍처 다이어그램 (브라우저 열람)
-├── gm/                               # 공명 (Gongmyeong) 프로필
-│   ├── config.yaml                   # Hermes 설정 (공명용)
-│   ├── SOUL.md                       # 인격 정의 + 지휘관 원칙 (공명용)
-│   └── or-balance.py                 # OpenRouter 잔액 리포트 스크립트
-└── bt/                               # 방통 (Bangtong) 프로필
-    ├── config.yaml                   # Hermes 설정 (방통용)
-    ├── SOUL.md                       # 인격 정의 + 참모 원칙 (방통용)
-    └── or-balance.py                 # OpenRouter 잔액 리포트 스크립트 (bt용)
+├── hermes-agent-architecture-v3.html  # 아키텍처 다이어그램 (브라우저 열람)
+├── shared-skills/                     # 공용 스킬 (양 프로필에 배포)
+│   └── productivity/
+│       └── saga-recording.md          # 사서 기록 절차
+├── gm/                                # 공명 (Gongmyeong) 프로필
+│   ├── config.yaml                    # Hermes 설정 (공명용)
+│   ├── SOUL.md                        # 인격 정의 + 지휘관 원칙 (공명용)
+│   └── or-balance.py                  # OpenRouter 잔액 리포트 스크립트
+└── bt/                                # 방통 (Bangtong) 프로필
+    ├── config.yaml                    # Hermes 설정 (방통용)
+    ├── SOUL.md                        # 인격 정의 + 참모 원칙 (방통용)
+    └── or-balance.py                  # OpenRouter 잔액 리포트 스크립트 (bt용)
 ```
 
 ## 주요 설정 (v3 — 2026-06-16)
@@ -42,3 +46,29 @@ hermes-config/
 ## CCG 교차검증
 
 이 설정은 Claude Code + Codex + Gemini CLI 3개 도구의 교차검증을 거쳤습니다.
+
+## 사서(史書) 기록 규칙
+
+공명과 방통은 세션 종료 시마다 **사서(史書)** 파일을 기록합니다.
+
+| 항목 | 내용 |
+|------|------|
+| **저장 경로** | `/home/thgo/Documents/<프로젝트명>/docs/사서/` |
+| **Windows 경로** | `\\wsl.localhost\Ubuntu\home\thgo\Documents\<프로젝트명>\docs\사서\` |
+| **파일명 형식** | `사서-YYYY-MM-DD-NNN.md` |
+| **기록 내용** | (1) 사용 API (2) 토큰 소모량 (3) 간손미 위임 (4) 직접 수행한 일 |
+
+### 다른 PC에서 초기 설정
+
+```bash
+# 1. 저장소 클론
+git clone git@github.com:dbsuperss-ops/hermes-config.git ~/hermes-config
+
+# 2. 모든 프로필 배포
+bash ~/hermes-config/deploy.sh
+
+# 3. 배포 후 Hermes 재시작
+hermes
+```
+
+`deploy.sh`가 SOUL.md, config.yaml, shared-skills를 `~/.hermes/profiles/`로 복사하고 사서 저장소 디렉토리를 생성합니다.
