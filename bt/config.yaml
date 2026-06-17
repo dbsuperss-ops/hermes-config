@@ -1,7 +1,8 @@
 model:
   default: deepseek/deepseek-v4-flash
-  provider: google-gemini-cli
-  base_url: cloudcode-pa://google
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  api_mode: chat_completions
 providers: {}
 fallback_providers:
 - provider: openrouter
