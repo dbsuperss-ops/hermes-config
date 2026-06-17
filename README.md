@@ -15,7 +15,8 @@ hermes-config/
 │   └── or-balance.py                 # OpenRouter 잔액 리포트 스크립트
 └── bt/                               # 방통 (Bangtong) 프로필
     ├── config.yaml                   # Hermes 설정 (방통용)
-    └── SOUL.md                       # 인격 정의 + 참모 원칙 (방통용)
+    ├── SOUL.md                       # 인격 정의 + 참모 원칙 (방통용)
+    └── or-balance.py                 # OpenRouter 잔액 리포트 스크립트 (bt용)
 ```
 
 ## 주요 설정 (v3 — 2026-06-16)
