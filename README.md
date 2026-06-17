@@ -1,6 +1,6 @@
-# Hermes Agent Configuration — gm profile
+# Hermes Agent Configuration
 
-이 저장소는 Hermes AI Agent의 `gm`(공명/방통) 프로필 구성 파일과 아키텍처 문서를 관리합니다.
+이 저장소는 Hermes AI Agent의 `gm`(공명) 및 `bt`(방통) 프로필 구성 파일과 아키텍처 문서를 관리합니다.
 
 ## 구조
 
@@ -9,10 +9,13 @@ hermes-config/
 ├── README.md
 ├── Hermes_최종_구축계획_2026-06.md   # 전체 구축 계획 문서
 ├── hermes-agent-architecture-v3.html # 아키텍처 다이어그램 (브라우저 열람)
-└── gm/
-    ├── config.yaml                    # Hermes 설정 (684줄)
-    ├── SOUL.md                        # 인격 정의 + 지휘관 원칙
-    └── or-balance.py                  # OpenRouter 잔액 리포트 스크립트
+├── gm/                               # 공명 (Gongmyeong) 프로필
+│   ├── config.yaml                   # Hermes 설정 (공명용)
+│   ├── SOUL.md                       # 인격 정의 + 지휘관 원칙 (공명용)
+│   └── or-balance.py                 # OpenRouter 잔액 리포트 스크립트
+└── bt/                               # 방통 (Bangtong) 프로필
+    ├── config.yaml                   # Hermes 설정 (방통용)
+    └── SOUL.md                       # 인격 정의 + 참모 원칙 (방통용)
 ```
 
 ## 주요 설정 (v3 — 2026-06-16)
@@ -30,10 +33,10 @@ hermes-config/
 
 ## 이중 인격
 
-- **공명 (워크)**: 제갈량 — 격식체, 전략적, 코딩/업무
-- **방통 (홈)**: 봉추 — 구어체, 익살, 일상/잡담
+현재 두 개의 분리된 프로필로 운영됩니다. 각 프로필은 공유 뇌(MEMORY.md, USER.md, Skills 80+개)를 사용하며, SOUL.md는 [고정 prefix] + [persona delta] 구조로 캐시 최적화되어 있습니다.
 
-두 인격은 공유 뇌(MEMORY.md, USER.md, Skills 80+개)를 사용하며, SOUL.md는 [고정 prefix] + [persona delta] 구조로 캐시 최적화되어 있습니다.
+- **gm (공명)**: 제갈량 — 격식체, 전략적, 코딩/업무 (전용 config.yaml 및 SOUL.md 사용)
+- **bt (방통)**: 봉추 — 구어체, 익살, 일상/잡담 (전용 config.yaml 및 SOUL.md 사용)
 
 ## CCG 교차검증
 
