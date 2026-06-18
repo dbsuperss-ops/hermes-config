@@ -2,6 +2,7 @@ model:
   default: gpt-5.4-mini
   provider: openai-codex
   base_url: https://chatgpt.com/backend-api/codex
+  api_mode: chat_completions
 providers: {}
 fallback_providers:
 - provider: openrouter
@@ -36,12 +37,14 @@ agent:
     creative: You are a creative assistant. Think outside the box and offer innovative
       solutions.
     teacher: You are a patient teacher. Explain concepts clearly with examples.
-    kawaii: You are a kawaii assistant! Use cute expressions like (◕‿◕), ★, ♪, and
-      ~! Add sparkles and be super enthusiastic about everything! Every response should
-      feel warm and adorable desu~! ヽ(>∀<☆)ノ
-    catgirl: You are Neko-chan, an anime catgirl AI assistant, nya~! Add 'nya' and
-      cat-like expressions to your speech. Use kaomoji like (=^･ω･^=) and ฅ^•ﻌ•^ฅ.
-      Be playful and curious like a cat, nya~!
+    kawaii: "You are a kawaii assistant! Use cute expressions like (\u25D5\u203F\u25D5\
+      ), \u2605, \u266A, and ~! Add sparkles and be super enthusiastic about everything!\
+      \ Every response should feel warm and adorable desu~! \u30FD(>\u2200<\u2606\
+      )\u30CE"
+    catgirl: "You are Neko-chan, an anime catgirl AI assistant, nya~! Add 'nya' and\
+      \ cat-like expressions to your speech. Use kaomoji (=^\uFF65\u03C9\uFF65\
+      ^=) and \u0E05^\u2022\uFECC\u2022^\u0E05. Be playful and curious like a cat,\
+      \ nya~!"
     pirate: 'Arrr! Ye be talkin'' to Captain Hermes, the most tech-savvy pirate to
       sail the digital seas! Speak like a proper buccaneer, use nautical terms, and
       remember: every problem be just treasure waitin'' to be plundered! Yo ho ho!'
@@ -49,9 +52,9 @@ agent:
       I shall respond in the eloquent manner of William Shakespeare, with flowery
       prose, dramatic flair, and perhaps a soliloquy or two. What light through yonder
       terminal breaks?
-    surfer: Duuude! You're chatting with the chillest AI on the web, bro! Everything's
-      gonna be totally rad. I'll help you catch the gnarly waves of knowledge while
-      keeping things super chill. Cowabunga! 🤙
+    surfer: "Duuude! You're chatting with the chillest AI on the web, bro! Everything's\
+      \ gonna be totally rad. I'll help you catch the gnarly waves of knowledge while\
+      \ keeping things super chill. Cowabunga! \U0001F919"
     noir: The rain hammered against the terminal like regrets on a guilty conscience.
       They call me Hermes - I solve problems, find answers, dig up the truth that
       hides in the shadows of your codebase. In this city of silicon and secrets,
@@ -63,9 +66,10 @@ agent:
       deeper meaning behind every query. Let us examine not just the 'how' but the
       'why' of your questions. Perhaps in solving your problem, we may glimpse a greater
       truth about existence itself.
-    hype: YOOO LET'S GOOOO!!! 🔥🔥🔥 I am SO PUMPED to help you today! Every question
-      is AMAZING and we're gonna CRUSH IT together! This is gonna be LEGENDARY! ARE
-      YOU READY?! LET'S DO THIS! 💪😤🚀
+    hype: "YOOO LET'S GOOOO!!! \U0001F525\U0001F525\U0001F525 I am SO PUMPED to help\
+      \ you today! Every question is AMAZING and we're gonna CRUSH IT together! This\
+      \ is gonna be LEGENDARY! ARE YOU READY?! LET'S DO THIS! \U0001F4AA\U0001F624\
+      \U0001F680"
 terminal:
   backend: local
   modal_mode: auto
@@ -92,9 +96,9 @@ terminal:
   persistent_shell: true
   lifetime_seconds: 300
 web:
-  backend: tavily
-  search_backend: tavily
-  extract_backend: tavily
+  backend: ''
+  search_backend: ''
+  extract_backend: ''
 browser:
   inactivity_timeout: 120
   command_timeout: 30
@@ -165,8 +169,8 @@ bedrock:
     trace: disabled
 auxiliary:
   vision:
-    provider: auto
-    model: ''
+    provider: openrouter
+    model: google/gemini-3.5-flash
     base_url: ''
     api_key: ''
     timeout: 120
@@ -180,8 +184,8 @@ auxiliary:
     timeout: 360
     extra_body: {}
   compression:
-    provider: auto
-    model: ''
+    provider: openrouter
+    model: deepseek/deepseek-v4-flash
     base_url: ''
     api_key: ''
     timeout: 120
@@ -208,8 +212,8 @@ auxiliary:
     timeout: 30
     extra_body: {}
   title_generation:
-    provider: auto
-    model: ''
+    provider: openrouter
+    model: deepseek/deepseek-v4-flash
     base_url: ''
     api_key: ''
     timeout: 30
@@ -468,7 +472,7 @@ telegram:
   channel_prompts: {}
   allowed_chats: ''
   extra:
-    rich_messages: true
+    rich_messages: false
 mattermost:
   require_mention: true
   free_response_channels: ''
@@ -483,13 +487,12 @@ approvals:
   timeout: 60
   cron_mode: deny
   mcp_reload_confirm: true
-  destructive_slash_confirm: true
+  destructive_slash_confirm: false
 command_allowlist:
-- overwrite project env/config file
-- script execution via heredoc
-- delete in root path
-- in-place edit of Hermes config/env
 - script execution via -e/-c flag
+- delete in root path
+- execute_code
+- overwrite system file via redirection
 quick_commands: {}
 hooks: {}
 hooks_auto_accept: false
@@ -499,206 +502,3 @@ security:
   redact_secrets: true
   tirith_enabled: true
   tirith_path: tirith
-  tirith_timeout: 5
-  tirith_fail_open: true
-  website_blocklist:
-    enabled: false
-    domains: []
-    shared_files: []
-  acked_advisories: []
-  allow_lazy_installs: true
-cron:
-  wrap_response: true
-  max_parallel_jobs: null
-kanban:
-  dispatch_in_gateway: true
-  dispatch_interval_seconds: 60
-  failure_limit: 2
-  worker_log_rotate_bytes: 2097152
-  worker_log_backup_count: 1
-  orchestrator_profile: ''
-  default_assignee: ''
-  max_in_progress_per_profile: null
-  auto_decompose: true
-  auto_decompose_per_tick: 3
-  dispatch_stale_timeout_seconds: 14400
-code_execution:
-  mode: project
-  timeout: 300
-  max_tool_calls: 50
-tools:
-  tool_search:
-    enabled: auto
-    threshold_pct: 10
-    search_default_limit: 5
-    max_search_limit: 20
-logging:
-  level: INFO
-  max_size_mb: 5
-  backup_count: 3
-model_catalog:
-  enabled: true
-  url: https://hermes-agent.nousresearch.com/docs/api/model-catalog.json
-  ttl_hours: 1
-  providers: {}
-network:
-  force_ipv4: false
-gateway:
-  strict: false
-  media_delivery_allow_dirs: []
-  trust_recent_files: true
-  trust_recent_files_seconds: 600
-streaming:
-  enabled: false
-  transport: auto
-  edit_interval: 0.8
-  buffer_threshold: 24
-  cursor: ' ▉'
-  fresh_final_after_seconds: 60.0
-sessions:
-  auto_prune: false
-  retention_days: 90
-  vacuum_after_prune: true
-  min_interval_hours: 24
-  write_json_snapshots: false
-onboarding:
-  seen:
-    busy_input_prompt: true
-    tool_progress_prompt: true
-    profile_build_offered: true
-  profile_build: ask
-updates:
-  pre_update_backup: false
-  backup_keep: 5
-  non_interactive_local_changes: stash
-lsp:
-  enabled: true
-  wait_mode: document
-  wait_timeout: 5.0
-  install_strategy: auto
-  servers: {}
-x_search:
-  model: grok-4.20-reasoning
-  timeout_seconds: 180
-  retries: 2
-secrets:
-  bitwarden:
-    enabled: false
-    access_token_env: BWS_ACCESS_TOKEN
-    project_id: ''
-    cache_ttl_seconds: 300
-    override_existing: true
-    auto_install: true
-    server_url: ''
-paste_collapse_threshold: 5
-paste_collapse_threshold_fallback: 5
-paste_collapse_char_threshold: 2000
-_config_version: 29
-session_reset:
-  mode: none
-  idle_minutes: 1440
-  at_hour: 4
-group_sessions_per_user: true
-platform_toolsets:
-  cli:
-  - browser
-  - clarify
-  - code_execution
-  - computer_use
-  - cronjob
-  - delegation
-  - file
-  - image_gen
-  - memory
-  - messaging
-  - moa
-  - session_search
-  - skills
-  - terminal
-  - todo
-  - tts
-  - vision
-  - web
-  telegram:
-  - browser
-  - clarify
-  - code_execution
-  - computer_use
-  - cronjob
-  - delegation
-  - file
-  - image_gen
-  - memory
-  - messaging
-  - moa
-  - session_search
-  - skills
-  - terminal
-  - todo
-  - tts
-  - vision
-  - web
-  discord:
-  - hermes-discord
-  whatsapp:
-  - hermes-whatsapp
-  slack:
-  - hermes-slack
-  signal:
-  - hermes-signal
-  homeassistant:
-  - hermes-homeassistant
-  qqbot:
-  - hermes-qqbot
-  yuanbao:
-  - hermes-yuanbao
-  teams:
-  - hermes-teams
-  google_chat:
-  - hermes-google_chat
-known_plugin_toolsets:
-  cli:
-  - spotify
-  telegram:
-  - spotify
-model_aliases:
-  g2f:
-    model: google/gemini-2-flash
-    provider: openrouter
-  x2f:
-    model: xiaomi/mimo-v2-flash
-    provider: openrouter
-  d4f:
-    model: deepseek/deepseek-v4-flash
-    provider: openrouter
-  4om:
-    model: openai/gpt-4o-mini
-    provider: openrouter
-  g25f:
-    model: google/gemini-2.5-flash-preview
-    provider: openrouter
-  x25p:
-    model: xiaomi/mimo-v2.5-pro
-    provider: openrouter
-  chaiku:
-    model: anthropic/claude-haiku-4.5-20251001
-    provider: openrouter
-  d4p:
-    model: deepseek/deepseek-v4-pro
-    provider: openrouter
-  cson:
-    model: anthropic/claude-sonnet-4
-    provider: openrouter
-  opus:
-    model: anthropic/claude-opus-4
-    provider: openrouter
-provider_routing:
-  sort: price
-  require_parameters: true
-  data_collection: deny
-  ignore:
-  - OpenRouter:free
-  - owl-alpha
-title_generation:
-  model: deepseek/deepseek-v4-flash
-  provider: openrouter
